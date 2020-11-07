@@ -1,2 +1,4 @@
 nodejs/node_modules
 nodejs/package-lock.json
+nodejs/.env
+php/config.php

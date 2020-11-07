@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const ViberBot = require('viber-bot').Bot;
 const BotEvents = require('viber-bot').Events;
 
@@ -20,9 +21,12 @@ function say(response, message) {
     response.send(new TextMessage(message));
 }
 
-function checkUrlAvailability(botResponse, urlToCheck) {
+function checkUrlAvailability(botResponse, text_received) {
+    let sender_name = botResponse.userProfile.name;
+    let sender_id = botResponse.userProfile.id;
 
-    if (urlToCheck === '') {
+
+    if (text_received === '') {
         say(botResponse, 'I need a Text to check');
         return;
     }
@@ -32,114 +36,131 @@ function checkUrlAvailability(botResponse, urlToCheck) {
     //     say(botResponse, 'Here comes the answer :P!');
     // }, 1000);
 
-    // ================================
-    // TextMessage object
-    const message = new TextMessage('hello');
-    // ================================
-
-    // ================================
-    // Url Message object
-    // let url = "https://google.com"
-    // const message = new UrlMessage(url);
-    // ================================
-
-    // ================================
-    // Contact Message object
-    // let contactName = "Ko Ko";
-    // let contactPhoneNumber = "09420084765";
-    // const message = new ContactMessage(contactName, contactPhoneNumber);
-    // ================================
-
-    // ================================
-    // Picture Message object
-    // let url = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
-    // const message = new PictureMessage(url);
-    // ================================
-
-    // ================================
-    // Video Message object
-    // let url = "https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4";
-    // let size = 1;
-    // const message = new VideoMessage(url, size);
-    // ================================
-
-    // ================================
-    // Location Message object
-    // let latitude = '16.812775';
-    // let longitude = '96.129981';
-    // const message = new LocationMessage(latitude, longitude);
-    // ================================
-
-    // ================================
-    // Sticker Message object
-    // let stickerId = '40132';
-    // const message = new StickerMessage(stickerId);
-    // ================================
-
-    // ================================
-    // File Message object
-    // let url = 'https://file-examples-com.github.io/uploads/2017/10/file-sample_150kB.pdf';
-    // let sizeInBytes = '102400';
-    // let filename = 'FileMessageTest.pdf';
-    // const message = new FileMessage(url, sizeInBytes, filename);
-    // ================================
-
-    // ================================
-    // RichMedia Message object
-    // const SAMPLE_RICH_MEDIA = {
-    //     "ButtonsGroupColumns": 6,
-    //     "ButtonsGroupRows": 5,
-    //     "BgColor": "#FFFFFF",
-    //     "Buttons": [{
-    //         "ActionBody": "https://www.google.com",
-    //         "ActionType": "open-url",
-    //         "BgMediaType": "picture",
-    //         "Image": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    //         "BgColor": "#000000",
-    //         "TextOpacity": 60,
-    //         "Rows": 4,
-    //         "Columns": 6
-    //     }, {
-    //         "ActionBody": "https://www.facebook.com",
-    //         "ActionType": "open-url",
-    //         "BgColor": "#85bb65",
-    //         "Text": "Buy",
-    //         "TextOpacity": 60,
-    //         "Rows": 1,
-    //         "Columns": 6
-    //     }]
-    // };
-    // const message = new RichMediaMessage(SAMPLE_RICH_MEDIA);
-    // ================================
-
-    // ================================
-    // Keyboard Message object
-    // const SAMPLE_KEYBOARD = {
-    //     "Type": "keyboard",
-    //     "Revision": 1,
-    //     "Buttons": [
-    //         {
-    //             "Columns": 3,
-    //             "Rows": 2,
-    //             "BgColor": "#e6f5ff",
-    //             "BgMedia": "http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",
-    //             "BgMediaType": "picture",
-    //             "BgLoop": true,
-    //             "ActionType": "reply",
-    //             "ActionBody": "Yes"
-    //         }
-    //     ]
-    // };
-    // const message = new KeyboardMessage(SAMPLE_KEYBOARD);
+    let message;
+    if(text_received === 'text') {
+        // ================================
+        // TextMessage object
+        // ================================
+        message = new TextMessage('hello');
+    }
+    else if(text_received === 'url') {
+        // ================================
+        // Url Message object
+        // ================================
+        let url = "https://google.com"
+        message = new UrlMessage(url);
+    }
+    else if(text_received === 'contact') {
+        // ================================
+        // Contact Message object
+        // ================================
+        let contactName = "Ko Ko";
+        let contactPhoneNumber = "09420084765";
+        message = new ContactMessage(contactName, contactPhoneNumber);
+    }
+    else if(text_received === 'picture') {
+        // ================================
+        // Picture Message object
+        // ================================
+        let url = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+        message = new PictureMessage(url);
+    }
+    else if(text_received === 'video') {
+        // ================================
+        // Video Message object
+        // ================================
+        let url = "https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4";
+        let size = 1;
+        message = new VideoMessage(url, size);
+    }
+    else if(text_received === 'location') {
+        // ================================
+        // Location Message object
+        // ================================
+        let latitude = '16.7985897';
+        let longitude = '96.1473162';
+        message = new LocationMessage(latitude, longitude);
+    }
+    else if(text_received === 'sticker') {
+        // ================================
+        // Sticker Message object
+        // https://developers.viber.com/docs/tools/sticker-ids/
+        // ================================
+        let stickerId = '40132';
+        message = new StickerMessage(stickerId);
+    }
+    else if(text_received === 'file') {
+        // ================================
+        // File Message object
+        // ================================
+        let url = 'https://file-examples-com.github.io/uploads/2017/10/file-sample_150kB.pdf';
+        let sizeInBytes = '102400';
+        let filename = 'FileMessageTest.pdf';
+        message = new FileMessage(url, sizeInBytes, filename);
+    }
+    else if(text_received === 'rich_media') {
+        // ================================
+        // RichMedia Message object
+        // ================================
+        const SAMPLE_RICH_MEDIA = {
+            "ButtonsGroupColumns": 6,
+            "ButtonsGroupRows": 5,
+            "BgColor": "#FFFFFF",
+            "Buttons": [{
+                "ActionBody": "https://www.google.com",
+                "ActionType": "open-url",
+                "BgMediaType": "picture",
+                "Image": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+                "BgColor": "#000000",
+                "TextOpacity": 60,
+                "Rows": 4,
+                "Columns": 6
+            }, {
+                "ActionBody": "https://www.facebook.com",
+                "ActionType": "open-url",
+                "BgColor": "#85bb65",
+                "Text": "Buy",
+                "TextOpacity": 60,
+                "Rows": 1,
+                "Columns": 6
+            }]
+        };
+        message = new RichMediaMessage(SAMPLE_RICH_MEDIA);
+    }
+    else if(text_received === 'url') {
+        // ================================
+        // Keyboard Message object
+        // ================================
+        const SAMPLE_KEYBOARD = {
+            "Type": "keyboard",
+            "Revision": 1,
+            "Buttons": [
+                {
+                    "Columns": 3,
+                    "Rows": 2,
+                    "BgColor": "#e6f5ff",
+                    "BgMedia": "http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",
+                    "BgMediaType": "picture",
+                    "BgLoop": true,
+                    "ActionType": "reply",
+                    "ActionBody": "Yes"
+                }
+            ]
+        };
+        message = new KeyboardMessage(SAMPLE_KEYBOARD);
+    }
+    else {
+        message = new TextMessage("Hi!" + sender_name + " (" + sender_id + ")");
+    }
 
     console.log(message);
     botResponse.send(message);
 }
 
 const bot = new ViberBot({
-	authToken: 'YourAccessTokenHere',
-	name: "CBT",
-	avatar: "http://viber.com/avatar.jpg" // It is recommended to be 720x720, and no more than 100kb.
+	authToken: process.env.ACCESS_TOKEN,
+	name: "Viber Bot",
+	avatar: "https://developers.viber.com/docs/img/stickers/40122.png" // It is recommended to be 720x720, and no more than 100kb.
 });
 
 // The user will get those messages on first registration
@@ -164,10 +185,6 @@ bot.onTextMessage(/./, (message, response) => {
 });
 
 bot.getBotProfile().then(response => console.log(`Bot Named: ${response.name}`));
-
-// Wasn't that easy? Let's create HTTPS server and set the webhook:
-const http = require('http');
-const port = process.env.PORT || 5000;
 
 if (process.env.NOW_URL || process.env.HEROKU_URL) {
     const http = require('http');

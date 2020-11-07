@@ -1,6 +1,7 @@
 <?php
 
-$access_token = "YourAccessTokenHere";
+// loading access token
+require_once 'config.php'; // $access_token = "YourAccessTokenHere";
 
 $request = file_get_contents("php://input");
 $input = json_decode($request, true);

@@ -9,7 +9,7 @@
   "author": "Ye Htut Win",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "dotenv": "^8.2.0",
     "viber-bot": "^1.0.16"
   }
 }
