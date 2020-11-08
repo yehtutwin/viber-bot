@@ -1,4 +1,7 @@
+note.txt
 nodejs/node_modules
 nodejs/package-lock.json
 nodejs/.env
 php/config.php
+php/log.log
+

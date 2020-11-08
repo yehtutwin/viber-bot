@@ -6,8 +6,6 @@ require_once 'config.php'; // $access_token = "YourAccessTokenHere";
 $request = file_get_contents("php://input");
 $input = json_decode($request, true);
 
-// $input['event'] = 'message';
-
 if($input['event'] == 'webhook') {
     $webhook_response['status'] = 0;
     $webhook_response['status_message'] = "ok";
@@ -21,23 +19,13 @@ elseif($input['event'] == 'message') {
     $sender_id = $input['sender']['id'];
     $sender_name = $input['sender']['name'];
 
-    $log_msg = "\n";
-    $log_msg .= "SenderName => ".$sender_name;
-    $log_msg .= "SenderID => ".$sender_id;
-    error_log($log_msg, 3, "log.log");
+    // $log_msg = "\n";
+    // $log_msg .= "SenderName => ".$sender_name;
+    // $log_msg .= "SenderID => ".$sender_id;
+    // error_log($log_msg, 3, "log.log");
 
     $data['auth_token'] = $access_token;
     $data['receiver'] = $sender_id;
-
-    // =================================
-    // Pure message //
-    // =================================
-    // if($text_received == "hi") {
-    //     $message_to_reply = "Hello ".$sender_name." ! How can I help you?";
-    // }
-    // else {
-    //     $message_to_reply = "Ask me something";
-    // }
 
     if($text_received == 'text') {
         // =================================
@@ -235,7 +223,7 @@ elseif($input['event'] == 'message') {
         $data['min_api_version'] = 2;
         $data['type'] = 'text';
         $data['broadcast_list'] = [
-            '123aOY8wiYubyCCcGlgajw=='
+            'QfzEzLbtpNeRjjFEe55VKw=='
         ];
         $data['text'] = 'broadcasting message to all subscribers';
         broadcastMessage($data);

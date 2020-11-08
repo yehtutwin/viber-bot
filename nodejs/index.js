@@ -186,6 +186,7 @@ bot.onTextMessage(/./, (message, response) => {
 
 bot.getBotProfile().then(response => console.log(`Bot Named: ${response.name}`));
 
+// Server
 if (process.env.NOW_URL || process.env.HEROKU_URL) {
     const http = require('http');
     const port = process.env.PORT || 5000;
