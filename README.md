@@ -1,4 +1,4 @@
-# viber-chatbot
+# viber-bot
 
 ### Create Viber Public Account
 https://partners.viber.com/account/create-bot-account
