@@ -41,7 +41,7 @@ function checkUrlAvailability(botResponse, text_received) {
         // ================================
         // TextMessage object
         // ================================
-        message = new TextMessage('hello');
+        message = new TextMessage('hello world');
     }
     else if(text_received === 'url') {
         // ================================
@@ -86,7 +86,7 @@ function checkUrlAvailability(botResponse, text_received) {
         // Sticker Message object
         // https://developers.viber.com/docs/tools/sticker-ids/
         // ================================
-        let stickerId = '40132';
+        let stickerId = '40133';
         message = new StickerMessage(stickerId);
     }
     else if(text_received === 'file') {
@@ -127,7 +127,7 @@ function checkUrlAvailability(botResponse, text_received) {
         };
         message = new RichMediaMessage(SAMPLE_RICH_MEDIA);
     }
-    else if(text_received === 'url') {
+    else if(text_received === 'keyboard') {
         // ================================
         // Keyboard Message object
         // ================================
